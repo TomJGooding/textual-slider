@@ -1,11 +1,20 @@
+from __future__ import annotations
+
 from rich.console import RenderableType
+from textual.binding import Binding
 from textual.geometry import Size
+from textual.message import Message
 from textual.reactive import reactive
 from textual.scrollbar import ScrollBarRender
 from textual.widget import Widget
 
 
 class Slider(Widget, can_focus=True):
+    BINDINGS = [
+        Binding("right", "slide_right", "Slide Right", show=False),
+        Binding("left", "slide_left", "Slide Left", show=False),
+    ]
+
     DEFAULT_CSS = """
     Slider {
         border: tall transparent;
@@ -14,10 +23,24 @@ class Slider(Widget, can_focus=True):
         width: auto;
         padding: 0 2;
     }
+
+    Slider:focus {
+        border: tall $accent;
+    }
     """
 
     value = reactive(0, init=False)
     grabbed = reactive(None)
+
+    class Changed(Message):
+        def __init__(self, slider: Slider, value: int) -> None:
+            super().__init__()
+            self.value: int = value
+            self.slider: Slider = slider
+
+        @property
+        def control(self) -> Slider:
+            return self.slider
 
     def __init__(
         self,
@@ -37,6 +60,9 @@ class Slider(Widget, can_focus=True):
         if value is not None:
             self.value = value
 
+    def watch_value(self) -> None:
+        self.post_message(self.Changed(self, self.value))
+
     def render(self) -> RenderableType:
         num_steps = ((self.max - self.min) / self.step) + 1
         thumb_size = round(100 / num_steps)
@@ -54,3 +80,13 @@ class Slider(Widget, can_focus=True):
 
     def get_content_height(self, container: Size, viewport: Size, width: int) -> int:
         return 1
+
+    def action_slide_right(self) -> None:
+        new_value = self.value + self.step
+        if new_value <= self.max:
+            self.value = new_value
+
+    def action_slide_left(self) -> None:
+        new_value = self.value - self.step
+        if new_value >= self.min:
+            self.value = new_value
