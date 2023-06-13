@@ -31,19 +31,21 @@ class Slider(Widget, can_focus=True):
         disabled: bool = False,
     ) -> None:
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
+        self.min = 0
         self.max = max
         self.step = step
         if value is not None:
             self.value = value
 
     def render(self) -> RenderableType:
-        scroll_percentage = (self.value / self.max) * 100
-        scroll_thumb_size = round(100 / self.max)
-        scroll_thumb_pos = scroll_percentage - (scroll_thumb_size / 2)
+        num_steps = ((self.max - self.min) / self.step) + 1
+        thumb_size = round(100 / num_steps)
+        slider_percent = (self.value / num_steps) * 100
+
         return ScrollBarRender(
             virtual_size=100,
-            window_size=scroll_thumb_size,
-            position=scroll_thumb_pos,
+            window_size=thumb_size,
+            position=slider_percent,
             vertical=False,
         )
 
