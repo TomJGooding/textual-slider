@@ -29,8 +29,8 @@ class Slider(Widget, can_focus=True):
     }
     """
 
-    value = reactive(0, init=False)
-    grabbed = reactive(None)
+    value = reactive(0)
+    slider_percent = reactive(0.0)
 
     class Changed(Message):
         def __init__(self, slider: Slider, value: int) -> None:
@@ -61,17 +61,17 @@ class Slider(Widget, can_focus=True):
             self.value = value
 
     def watch_value(self) -> None:
+        num_steps = ((self.max - self.min) / self.step) + 1
+        self.slider_percent = (self.value / num_steps) * 100
         self.post_message(self.Changed(self, self.value))
 
     def render(self) -> RenderableType:
         num_steps = ((self.max - self.min) / self.step) + 1
         thumb_size = round(100 / num_steps)
-        slider_percent = (self.value / num_steps) * 100
-
         return ScrollBarRender(
             virtual_size=100,
             window_size=thumb_size,
-            position=slider_percent,
+            position=self.slider_percent,
             vertical=False,
         )
 
