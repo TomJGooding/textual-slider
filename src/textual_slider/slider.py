@@ -60,14 +60,16 @@ class Slider(Widget, can_focus=True):
         if value is not None:
             self.value = value
 
+    @property
+    def number_of_steps(self) -> int:
+        return int((self.max - self.min) / self.step) + 1
+
     def watch_value(self) -> None:
-        num_steps = ((self.max - self.min) / self.step) + 1
-        self.slider_percent = (self.value / num_steps) * 100
+        self.slider_percent = (self.value / self.number_of_steps) * 100
         self.post_message(self.Changed(self, self.value))
 
     def render(self) -> RenderableType:
-        num_steps = ((self.max - self.min) / self.step) + 1
-        thumb_size = round(100 / num_steps)
+        thumb_size = round(100 / self.number_of_steps)
         return ScrollBarRender(
             virtual_size=100,
             window_size=thumb_size,
