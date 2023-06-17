@@ -3,8 +3,9 @@ from __future__ import annotations
 from math import ceil
 
 from rich.console import RenderableType
+from textual import events
 from textual.binding import Binding
-from textual.geometry import Size
+from textual.geometry import Offset, Size
 from textual.message import Message
 from textual.reactive import reactive
 from textual.scrollbar import ScrollBarRender
@@ -40,6 +41,8 @@ class Slider(Widget, can_focus=True):
 
     value = reactive(0)
     slider_percent = reactive(0.0)
+    grabbed: reactive[Offset | None] = reactive(None)
+    grabbed_percent = reactive(0.0)
 
     class Changed(Message):
         def __init__(self, slider: Slider, value: int) -> None:
@@ -103,3 +106,29 @@ class Slider(Widget, can_focus=True):
         new_value = self.value - self.step
         if new_value >= self.min:
             self.value = new_value
+
+    def action_grab(self) -> None:
+        self.capture_mouse()
+
+    async def _on_mouse_up(self, event: events.MouseUp) -> None:
+        if self.grabbed:
+            self.release_mouse()
+            self.grabbed = None
+        event.stop()
+
+    def _on_mouse_capture(self, event: events.MouseCapture) -> None:
+        self.grabbed = event.mouse_position
+        self.grabbed_percent = self.slider_percent
+
+    def _on_mouse_release(self, event: events.MouseRelease) -> None:
+        self.grabbed = None
+        event.stop()
+
+    async def _on_mouse_move(self, event: events.MouseMove) -> None:
+        if self.grabbed:
+            print(f"Mouse move: {event.screen_x - self.grabbed.x}")
+
+        event.stop()
+
+    async def _on_click(self, event: events.Click) -> None:
+        event.stop()
