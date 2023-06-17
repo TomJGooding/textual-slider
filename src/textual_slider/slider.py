@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from math import ceil
+
 from rich.console import RenderableType
 from textual.binding import Binding
 from textual.geometry import Size
@@ -69,7 +71,7 @@ class Slider(Widget, can_focus=True):
         self.post_message(self.Changed(self, self.value))
 
     def render(self) -> RenderableType:
-        thumb_size = round(100 / self.number_of_steps)
+        thumb_size = ceil(100 / self.number_of_steps)
         return ScrollBarRender(
             virtual_size=100,
             window_size=thumb_size,
