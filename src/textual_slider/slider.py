@@ -17,13 +17,20 @@ class Slider(Widget, can_focus=True):
         Binding("left", "slide_left", "Slide Left", show=False),
     ]
 
+    COMPONENT_CLASSES = {"slider--slider"}
+
     DEFAULT_CSS = """
     Slider {
         border: tall transparent;
-        background: $panel;
+        background: $boost;
         height: auto;
         width: auto;
         padding: 0 2;
+    }
+
+    Slider > .slider--slider {
+        background: $panel-darken-2;
+        color: $primary;
     }
 
     Slider:focus {
@@ -71,11 +78,13 @@ class Slider(Widget, can_focus=True):
         self.post_message(self.Changed(self, self.value))
 
     def render(self) -> RenderableType:
+        style = self.get_component_rich_style("slider--slider")
         thumb_size = ceil(100 / self.number_of_steps)
         return ScrollBarRender(
             virtual_size=100,
             window_size=thumb_size,
             position=self.slider_percent,
+            style=style,
             vertical=False,
         )
 
