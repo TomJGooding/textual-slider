@@ -126,11 +126,9 @@ class Slider(Widget, can_focus=True):
 
     async def _on_mouse_move(self, event: events.MouseMove) -> None:
         if self.grabbed:
-            thumb_size = ceil(100 / self.number_of_steps)
             mouse_move = event.screen_x - self.grabbed.x
-
             new_slider_percent = self.grabbed_percent + (
-                mouse_move * (self.content_size.width / thumb_size)
+                mouse_move * (100 / self.content_size.width)
             )
             max_percent = (self.max / self.number_of_steps) * 100
             self.slider_percent = clamp(new_slider_percent, 0, max_percent)
