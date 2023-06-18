@@ -5,7 +5,7 @@ from math import ceil
 from rich.console import RenderableType
 from textual import events
 from textual.binding import Binding
-from textual.geometry import Offset, Size
+from textual.geometry import Offset, Size, clamp
 from textual.message import Message
 from textual.reactive import reactive
 from textual.scrollbar import ScrollBarRender
@@ -126,7 +126,14 @@ class Slider(Widget, can_focus=True):
 
     async def _on_mouse_move(self, event: events.MouseMove) -> None:
         if self.grabbed:
-            print(f"Mouse move: {event.screen_x - self.grabbed.x}")
+            thumb_size = ceil(100 / self.number_of_steps)
+            mouse_move = event.screen_x - self.grabbed.x
+
+            new_slider_percent = self.grabbed_percent + (
+                mouse_move * (self.content_size.width / thumb_size)
+            )
+            max_percent = (self.max / self.number_of_steps) * 100
+            self.slider_percent = clamp(new_slider_percent, 0, max_percent)
 
         event.stop()
 
