@@ -27,9 +27,9 @@ class RgbSlidersApp(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Slider(max=255, step=1, value=0, id="red-slider")
-        yield Slider(max=255, step=1, value=0, id="green-slider")
-        yield Slider(max=255, step=1, value=0, id="blue-slider")
+        yield Slider(max=255, value=0, id="red-slider")
+        yield Slider(max=255, value=0, id="green-slider")
+        yield Slider(max=255, value=0, id="blue-slider")
 
     @on(Slider.Changed)
     def update_screen_color(self) -> None:
