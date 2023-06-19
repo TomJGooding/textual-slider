@@ -15,10 +15,10 @@ class SpinalTapApp(App):
 
     def compose(self) -> ComposeResult:
         yield Center(Label('"Why don\'t you just make ten louder?"'))
-        yield Center(Slider(max=10, step=1, value=5, id="normal-amp"))
+        yield Center(Slider(max=10, value=5, id="normal-amp"))
         yield Center(Label(id="normal-amp-label"))
         yield Center(Label('"...These go to eleven"'))
-        yield Center(Slider(max=11, step=1, value=5, id="tufnel-amp"))
+        yield Center(Slider(max=11, value=5, id="tufnel-amp"))
         yield Center(Label(id="tufnel-amp-label"))
 
     def on_mount(self) -> None:
