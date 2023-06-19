@@ -40,9 +40,9 @@ class Slider(Widget, can_focus=True):
     """
 
     value = reactive(0)
-    slider_percent = reactive(0.0)
+    slider_position = reactive(0.0)
     grabbed: reactive[Offset | None] = reactive(None)
-    grabbed_percent = reactive(0.0)
+    grabbed_position = reactive(0.0)
 
     class Changed(Message):
         def __init__(self, slider: Slider, value: int) -> None:
@@ -78,7 +78,7 @@ class Slider(Widget, can_focus=True):
 
     def watch_value(self) -> None:
         if not self.grabbed:
-            self.slider_percent = (
+            self.slider_position = (
                 (self.value - self.min) / (self.number_of_steps / 100)
             ) / self.step
         self.post_message(self.Changed(self, self.value))
@@ -89,7 +89,7 @@ class Slider(Widget, can_focus=True):
         return ScrollBarRender(
             virtual_size=100,
             window_size=thumb_size,
-            position=self.slider_percent,
+            position=self.slider_position,
             style=style,
             vertical=False,
         )
@@ -121,7 +121,7 @@ class Slider(Widget, can_focus=True):
 
     def _on_mouse_capture(self, event: events.MouseCapture) -> None:
         self.grabbed = event.mouse_position
-        self.grabbed_percent = self.slider_percent
+        self.grabbed_position = self.slider_position
 
     def _on_mouse_release(self, event: events.MouseRelease) -> None:
         self.grabbed = None
@@ -130,15 +130,15 @@ class Slider(Widget, can_focus=True):
     async def _on_mouse_move(self, event: events.MouseMove) -> None:
         if self.grabbed:
             mouse_move = event.screen_x - self.grabbed.x
-            new_slider_percent = self.grabbed_percent + (
+            new_slider_position = self.grabbed_position + (
                 mouse_move * (100 / self.content_size.width)
             )
-            max_percent = (
+            max_position = (
                 (self.max - self.min) / (self.number_of_steps / 100)
             ) / self.step
-            self.slider_percent = clamp(new_slider_percent, 0, max_percent)
+            self.slider_position = clamp(new_slider_position, 0, max_position)
             self.value = (
-                self.step * round(self.slider_percent * (self.number_of_steps / 100))
+                self.step * round(self.slider_position * (self.number_of_steps / 100))
                 + self.min
             )
 
