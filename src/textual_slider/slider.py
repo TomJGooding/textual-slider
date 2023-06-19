@@ -77,6 +77,15 @@ class Slider(Widget, can_focus=True):
     def number_of_steps(self) -> int:
         return int((self.max - self.min) / self.step) + 1
 
+    def validate_value(self, value: int) -> int:
+        return clamp(value, self.min, self.max)
+
+    def validate__slider_position(self, slider_position: float) -> float:
+        max_position = (
+            (self.max - self.min) / (self.number_of_steps / 100)
+        ) / self.step
+        return clamp(slider_position, 0, max_position)
+
     def watch_value(self) -> None:
         if not self._grabbed:
             self._slider_position = (
@@ -102,14 +111,10 @@ class Slider(Widget, can_focus=True):
         return 1
 
     def action_slide_right(self) -> None:
-        new_value = self.value + self.step
-        if new_value <= self.max:
-            self.value = new_value
+        self.value = self.value + self.step
 
     def action_slide_left(self) -> None:
-        new_value = self.value - self.step
-        if new_value >= self.min:
-            self.value = new_value
+        self.value = self.value - self.step
 
     def action_grab(self) -> None:
         self.capture_mouse()
@@ -131,13 +136,9 @@ class Slider(Widget, can_focus=True):
     async def _on_mouse_move(self, event: events.MouseMove) -> None:
         if self._grabbed:
             mouse_move = event.screen_x - self._grabbed.x
-            new_slider_position = self.grabbed_position + (
+            self._slider_position = self.grabbed_position + (
                 mouse_move * (100 / self.content_size.width)
             )
-            max_position = (
-                (self.max - self.min) / (self.number_of_steps / 100)
-            ) / self.step
-            self._slider_position = clamp(new_slider_position, 0, max_position)
             self.value = (
                 self.step * round(self._slider_position * (self.number_of_steps / 100))
                 + self.min
