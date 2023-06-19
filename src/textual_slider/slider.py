@@ -78,7 +78,9 @@ class Slider(Widget, can_focus=True):
 
     def watch_value(self) -> None:
         if not self.grabbed:
-            self.slider_percent = (self.value / self.number_of_steps) * 100
+            self.slider_percent = (
+                self.value / (self.number_of_steps / 100)
+            ) / self.step
         self.post_message(self.Changed(self, self.value))
 
     def render(self) -> RenderableType:
@@ -131,9 +133,11 @@ class Slider(Widget, can_focus=True):
             new_slider_percent = self.grabbed_percent + (
                 mouse_move * (100 / self.content_size.width)
             )
-            max_percent = (self.max / self.number_of_steps) * 100
+            max_percent = (self.max / (self.number_of_steps / 100)) / self.step
             self.slider_percent = clamp(new_slider_percent, 0, max_percent)
-            self.value = round((self.slider_percent / 100) * (self.number_of_steps))
+            self.value = self.step * round(
+                self.slider_percent * (self.number_of_steps / 100)
+            )
 
         event.stop()
 
