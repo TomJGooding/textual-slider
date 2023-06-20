@@ -122,10 +122,19 @@ class Slider(Widget, can_focus=True):
     def action_grab(self) -> None:
         self.capture_mouse()
 
+        # Workaround for unexpected mouse grab and drag behaviour
+        # depending on the currently focused widget.
+        # Stolen from https://github.com/1j01/textual-paint
+        self.can_focus = False
+
     async def _on_mouse_up(self, event: events.MouseUp) -> None:
         if self._grabbed:
             self.release_mouse()
             self._grabbed = None
+
+            # Workaround for unexpected mouse behaviour mentioned above
+            self.can_focus = True
+
         event.stop()
 
     def _on_mouse_capture(self, event: events.MouseCapture) -> None:
