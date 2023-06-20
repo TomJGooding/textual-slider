@@ -31,6 +31,14 @@ class RgbSlidersApp(App):
         yield Slider(min=0, max=255, value=0, id="green-slider")
         yield Slider(min=0, max=255, value=0, id="blue-slider")
 
+    def on_mount(self) -> None:
+        red = self.query_one("#red-slider", Slider).value
+        green = self.query_one("#green-slider", Slider).value
+        blue = self.query_one("#blue-slider", Slider).value
+
+        self.screen.styles.background = Color(red, green, blue)
+        self.title = f"RGB {red} {green} {blue}"
+
     @on(Slider.Changed)
     def update_screen_color(self) -> None:
         red = self.query_one("#red-slider", Slider).value

@@ -40,7 +40,7 @@ class Slider(Widget, can_focus=True):
     }
     """
 
-    value = reactive(0)
+    value = reactive(0, init=False)
     _slider_position = reactive(0.0)
     _grabbed: var[Offset | None] = var[Optional[Offset]](None)
     _grabbed_position: var[float] = var(0.0)
@@ -72,6 +72,9 @@ class Slider(Widget, can_focus=True):
         self.step = step
         if value is not None:
             self.value = value
+            self._slider_position = (
+                (self.value - self.min) / (self.number_of_steps / 100)
+            ) / self.step
 
     @property
     def number_of_steps(self) -> int:
