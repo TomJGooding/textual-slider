@@ -8,7 +8,7 @@ from textual import events
 from textual.binding import Binding
 from textual.geometry import Offset, Size, clamp
 from textual.message import Message
-from textual.reactive import reactive
+from textual.reactive import reactive, var
 from textual.scrollbar import ScrollBarRender
 from textual.widget import Widget
 
@@ -42,8 +42,8 @@ class Slider(Widget, can_focus=True):
 
     value = reactive(0)
     _slider_position = reactive(0.0)
-    _grabbed: reactive[Offset | None] = reactive[Optional[Offset]](None)
-    _grabbed_position = reactive(0.0)
+    _grabbed: var[Offset | None] = var[Optional[Offset]](None)
+    _grabbed_position: var[float] = var(0.0)
 
     class Changed(Message):
         def __init__(self, slider: Slider, value: int) -> None:
