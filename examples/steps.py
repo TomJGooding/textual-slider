@@ -39,6 +39,19 @@ class SliderWithStepApp(App):
             yield Center(Slider(min=200, max=500, step=100, value=200, id="slider3"))
             yield Center(Label(id="slider3-value"))
 
+    def on_mount(self) -> None:
+        slider1 = self.query_one("#slider1", Slider)
+        slider1_value_label = self.query_one("#slider1-value", Label)
+        slider1_value_label.update(str(slider1.value))
+
+        slider2 = self.query_one("#slider2", Slider)
+        slider2_value_label = self.query_one("#slider2-value", Label)
+        slider2_value_label.update(str(slider2.value))
+
+        slider3 = self.query_one("#slider3", Slider)
+        slider3_value_label = self.query_one("#slider3-value", Label)
+        slider3_value_label.update(str(slider3.value))
+
     @on(Slider.Changed, "#slider1")
     def on_slider_changed_slider1(self, event: Slider.Changed) -> None:
         value_label = self.query_one("#slider1-value", Label)
