@@ -23,10 +23,11 @@ class Slider(Widget, can_focus=True):
 
     DEFAULT_CSS = """
     Slider {
+        width: 32;
+        height: 1;
+        min-height: 1;
         border: tall transparent;
         background: $boost;
-        height: auto;
-        width: auto;
         padding: 0 2;
     }
 
@@ -106,12 +107,6 @@ class Slider(Widget, can_focus=True):
             style=style,
             vertical=False,
         )
-
-    def get_content_width(self, container: Size, viewport: Size) -> int:
-        return 32
-
-    def get_content_height(self, container: Size, viewport: Size, width: int) -> int:
-        return 1
 
     def action_slide_right(self) -> None:
         self.value = self.value + self.step
