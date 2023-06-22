@@ -3,7 +3,7 @@ from textual.app import App, ComposeResult
 from textual.color import Color
 from textual.widgets import Header
 
-from textual_slider.slider import Slider
+from textual_slider import Slider
 
 
 class RgbSlidersApp(App):

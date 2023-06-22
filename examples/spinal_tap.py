@@ -3,7 +3,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Center, Vertical
 from textual.widgets import Label
 
-from textual_slider.slider import Slider
+from textual_slider import Slider
 
 
 class SpinalTapApp(App):
