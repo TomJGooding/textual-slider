@@ -14,6 +14,8 @@ from textual.widget import Widget
 
 
 class Slider(Widget, can_focus=True):
+    """A simple slider widget."""
+
     BINDINGS = [
         Binding("right", "slide_right", "Slide Right", show=False),
         Binding("left", "slide_left", "Slide Left", show=False),
@@ -42,11 +44,18 @@ class Slider(Widget, can_focus=True):
     """
 
     value = reactive(0, init=False)
+    """The value of the slider."""
+
     _slider_position = reactive(0.0)
     _grabbed: var[Offset | None] = var[Optional[Offset]](None)
     _grabbed_position: var[float] = var(0.0)
 
     class Changed(Message):
+        """Posted when the value of the slider changes.
+
+        This message can be handled using an `on_slider_changed` method.
+        """
+
         def __init__(self, slider: Slider, value: int) -> None:
             super().__init__()
             self.value: int = value
@@ -67,6 +76,18 @@ class Slider(Widget, can_focus=True):
         classes: str | None = None,
         disabled: bool = False,
     ) -> None:
+        """Create a slider widget.
+
+        Args:
+            min: The minimum value of the slider.
+            max: The maximum value of the slider.
+            step: The step size of the slider.
+            value: The initial value of the slider.
+            name: The name of the slider.
+            id: The ID of the slider in the DOM.
+            classes: The CSS classes of the slider.
+            disabled: Whether the slider is disabled or not.
+        """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self.min = min
         self.max = max
