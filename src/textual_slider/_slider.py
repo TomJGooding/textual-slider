@@ -6,7 +6,7 @@ from typing import Optional
 from rich.console import RenderableType
 from textual import events
 from textual.binding import Binding
-from textual.geometry import Offset, Size, clamp
+from textual.geometry import Offset, clamp
 from textual.message import Message
 from textual.reactive import reactive, var
 from textual.scrollbar import ScrollBarRender
