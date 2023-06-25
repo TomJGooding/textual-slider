@@ -26,7 +26,7 @@ class SliderWithStepApp(App):
     def compose(self) -> ComposeResult:
         with Vertical():
             yield Center(Label("0 to 100 slider with step of 25", classes="title"))
-            yield Center(Slider(min=0, max=100, step=25, value=0, id="slider1"))
+            yield Center(Slider(min=0, max=100, step=25, id="slider1"))
             yield Center(Label(id="slider1-value"))
 
         with Vertical():

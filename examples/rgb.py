@@ -27,9 +27,9 @@ class RgbSlidersApp(App):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Slider(min=0, max=255, value=0, id="red-slider")
-        yield Slider(min=0, max=255, value=0, id="green-slider")
-        yield Slider(min=0, max=255, value=0, id="blue-slider")
+        yield Slider(min=0, max=255, id="red-slider")
+        yield Slider(min=0, max=255, id="green-slider")
+        yield Slider(min=0, max=255, id="blue-slider")
 
     def on_mount(self) -> None:
         red = self.query_one("#red-slider", Slider).value

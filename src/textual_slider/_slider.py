@@ -92,11 +92,10 @@ class Slider(Widget, can_focus=True):
         self.min = min
         self.max = max
         self.step = step
-        if value is not None:
-            self.value = value
-            self._slider_position = (
-                (self.value - self.min) / (self.number_of_steps / 100)
-            ) / self.step
+        self.value = value if value is not None else min
+        self._slider_position = (
+            (self.value - self.min) / (self.number_of_steps / 100)
+        ) / self.step
 
     @property
     def number_of_steps(self) -> int:
