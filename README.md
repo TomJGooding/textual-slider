@@ -4,6 +4,14 @@ A Textual widget for a simple slider.
 
 ![screenshot](https://raw.githubusercontent.com/TomJGooding/textual-slider/main/assets/screenshot.png)
 
+## Installation
+
+Install textual-slider using pip:
+
+```
+pip install textual-slider
+```
+
 ## Usage
 
 textual-slider provides a simple `Slider` widget for use in
