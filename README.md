@@ -1,20 +1,34 @@
 # textual-slider
 
-A Textual widget for a simple slider
+A Textual widget for a simple slider.
 
-> **Warning**
-> This project is currently a work in progress
+![screenshot](https://raw.githubusercontent.com/TomJGooding/textual-slider/main/assets/screenshot.png)
 
-![screenshot](assets/screenshot.png)
+## Usage
+
+textual-slider provides a simple `Slider` widget for use in
+[Textual](https://github.com/Textualize/textual) that allows selecting a
+**integer** value within a given range.
+
+The initial value of the slider if not specified is the minimum value.
+You can also optionally specify a step size between valid values.
+
+```python
+yield Slider(0, 10)
+
+yield Slider(min=200, max=500, step=100, value=300)
+```
+
+You can find more complete `Slider` usage examples in the `/examples/` directory
+of this repo.
 
 ## Contributing
 
 I created this simple slider widget as a learning exercise to better
-understand Textual,
+understand Textual and it is still a work in progress.
 
-This is my hobby project and still a work in progress. I would really
-appreciate any feedback or suggestions, but I'm afraid I probably won't be
-accepting any PRs at the moment.
+I'd really appreciate any feedback or suggestions, but I'm afraid I
+probably won't be accepting any PRs at the moment.
 
 ## Licence
 
