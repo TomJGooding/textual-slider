@@ -7,7 +7,7 @@ A Textual widget for a simple slider.
 ## Usage
 
 textual-slider provides a simple `Slider` widget for use in
-[Textual](https://github.com/Textualize/textual) that allows selecting a
+[Textual](https://github.com/Textualize/textual), that allows selecting an
 **integer** value within a given range.
 
 The initial value of the slider if not specified is the minimum value.
