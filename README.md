@@ -19,8 +19,18 @@ yield Slider(0, 10)
 yield Slider(min=200, max=500, step=100, value=300)
 ```
 
-You can find more complete `Slider` usage examples in the `/examples/` directory
-of this repo.
+You can find more complete usage examples of the `Slider` widget in the
+`/examples/` directory of this repo.
+
+## Limitations
+
+Textual apps run in the terminal, which work in terms of character cells rather
+than pixels. This means you obviously can't have the same fine-grained control
+for this slider as usual, depending on the size of the slider range and the
+styled width.
+
+Currently this slider widget only works with **integer** values. Any suggestions
+for how to work with floating point values would be welcome!
 
 ## Contributing
 
