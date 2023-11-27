@@ -26,8 +26,8 @@ class Slider(Widget, can_focus=True):
     DEFAULT_CSS = """
     Slider {
         width: 32;
-        height: 1;
-        min-height: 1;
+        height: 3;
+        min-height: 3;
         border: tall transparent;
         background: $boost;
         padding: 0 2;
