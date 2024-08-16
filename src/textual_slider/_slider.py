@@ -69,6 +69,7 @@ class Slider(Widget, can_focus=True):
         self,
         min: int,
         max: int,
+        *,
         step: int = 1,
         value: int | None = None,
         name: str | None = None,
