@@ -155,7 +155,7 @@ class Slider(Widget, can_focus=True):
 
     def _on_mouse_capture(self, event: events.MouseCapture) -> None:
         self._grabbed = event.mouse_position
-        self.grabbed_position = self._slider_position
+        self._grabbed_position = self._slider_position
 
     def _on_mouse_release(self, event: events.MouseRelease) -> None:
         self._grabbed = None
@@ -164,7 +164,7 @@ class Slider(Widget, can_focus=True):
     async def _on_mouse_move(self, event: events.MouseMove) -> None:
         if self._grabbed:
             mouse_move = event.screen_x - self._grabbed.x
-            self._slider_position = self.grabbed_position + (
+            self._slider_position = self._grabbed_position + (
                 mouse_move * (100 / self.content_size.width)
             )
             self.value = (
