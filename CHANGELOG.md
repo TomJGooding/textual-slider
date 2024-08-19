@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Enable clicking to quickly move the slider rather than dragging https://github.com/TomJGooding/textual-slider/pull/46
+- Enable clicking (mouse down) to quickly move the slider rather than dragging https://github.com/TomJGooding/textual-slider/pull/46
 
 ### Changed
 
