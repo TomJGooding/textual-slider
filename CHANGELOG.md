@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Enable clicking (mouse down) to quickly move the slider rather than dragging https://github.com/TomJGooding/textual-slider/pull/46
+
 ### Changed
 
-- BREAKING CHANGE: The `Slider` constructor now requires optional parameters to be specified as keyword-only arguments.
+- BREAKING CHANGE: The `Slider` constructor now requires optional parameters to be specified as keyword-only arguments https://github.com/TomJGooding/textual-slider/pull/44
 
 ## [0.1.2] - 2023-11-27
 

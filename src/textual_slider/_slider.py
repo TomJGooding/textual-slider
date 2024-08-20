@@ -43,10 +43,10 @@ class Slider(Widget, can_focus=True):
     }
     """
 
-    value = reactive(0, init=False)
+    value: reactive[int] = reactive(0, init=False)
     """The value of the slider."""
 
-    _slider_position = reactive(0.0)
+    _slider_position: reactive[float] = reactive(0.0)
     _grabbed: var[Offset | None] = var[Optional[Offset]](None)
     _grabbed_position: var[float] = var(0.0)
 
@@ -120,10 +120,10 @@ class Slider(Widget, can_focus=True):
 
     def render(self) -> RenderableType:
         style = self.get_component_rich_style("slider--slider")
-        thumb_size = ceil(100 / self.number_of_steps)
+        step_ratio = ceil(100 / self.number_of_steps)
         return ScrollBarRender(
             virtual_size=100,
-            window_size=thumb_size,
+            window_size=step_ratio,
             position=self._slider_position,
             style=style,
             vertical=False,
@@ -134,6 +134,32 @@ class Slider(Widget, can_focus=True):
 
     def action_slide_left(self) -> None:
         self.value = self.value - self.step
+
+    async def _on_mouse_down(self, event: events.MouseDown) -> None:
+        event.stop()
+
+        mouse_x = event.x - self.styles.gutter.left
+        mouse_y = event.y - self.styles.gutter.top
+
+        if not (0 <= mouse_x < self.content_size.width) or not (
+            0 <= mouse_y < self.content_size.height
+        ):
+            return
+
+        step_ratio = ceil(100 / self.number_of_steps)
+        thumb_size = max(1, step_ratio / (100 / self.content_size.width))
+
+        self._slider_position = (
+            (mouse_x - (thumb_size // 2)) / self.content_size.width
+        ) * 100
+
+        self._grabbed = event.screen_offset
+        self.action_grab()
+
+        self.value = (
+            self.step * round(self._slider_position * (self.number_of_steps / 100))
+            + self.min
+        )
 
     def action_grab(self) -> None:
         self.capture_mouse()
