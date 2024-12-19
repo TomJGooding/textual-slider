@@ -28,18 +28,19 @@ class Slider(Widget, can_focus=True):
         width: 32;
         height: 3;
         min-height: 3;
-        border: tall transparent;
-        background: $boost;
+        border: tall $border-blurred;
+        background: $surface;
         padding: 0 2;
-    }
 
-    Slider > .slider--slider {
-        background: $panel-darken-2;
-        color: $primary;
-    }
+        & > .slider--slider {
+            background: $panel-darken-2;
+            color: $primary;
+        }
 
-    Slider:focus {
-        border: tall $accent;
+        &:focus {
+            border: tall $border;
+            background-tint: $foreground 5%;
+        }
     }
     """
 
