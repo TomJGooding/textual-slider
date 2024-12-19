@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - BREAKING CHANGE: The `Slider` constructor now requires optional parameters to be specified as keyword-only arguments https://github.com/TomJGooding/textual-slider/pull/44
+- Bump the minimum Textual version to 1.0.0 https://github.com/TomJGooding/textual-slider/pull/48
+- Update the default CSS to bring into line with other Textual widgets https://github.com/TomJGooding/textual-slider/pull/48
 
 ## [0.1.2] - 2023-11-27
 
