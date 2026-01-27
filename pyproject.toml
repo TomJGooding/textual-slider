@@ -1,3 +1,47 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools >= 77.0.3"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "textual-slider"
+dynamic = ["version"]
+description = "A Textual widget for a simple slider"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "GPL-3.0-or-later"
+keywords = []
+authors = [
+    { name = "TomJGooding" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "textual >= 1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/TomJGooding/textual-slider"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "isort",
+    "mypy",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "textual-dev",
+]
+
+[tool.setuptools.dynamic.version]
+attr = "textual_slider.__version__"
