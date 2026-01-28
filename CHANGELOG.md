@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+= Change mouse pointer when slider grabbed (in supported terminals) https://github.com/TomJGooding/textual-slider/pull/56
+
 ### Changed
 
 - Bump the minimum Textual version to 7.4.0 https://github.com/TomJGooding/textual-slider/pull/55
