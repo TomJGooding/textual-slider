@@ -44,6 +44,8 @@ class Slider(Widget, can_focus=True):
     }
     """
 
+    ALLOW_SELECT = False
+
     value: reactive[int] = reactive(0, init=False)
     """The value of the slider."""
 
@@ -181,10 +183,12 @@ class Slider(Widget, can_focus=True):
         event.stop()
 
     def _on_mouse_capture(self, event: events.MouseCapture) -> None:
+        self.styles.pointer = "grabbing"
         self._grabbed = event.mouse_position
         self._grabbed_position = self._slider_position
 
     def _on_mouse_release(self, event: events.MouseRelease) -> None:
+        self.styles.pointer = "default"
         self._grabbed = None
         event.stop()
 
